@@ -1,0 +1,100 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct Array
+{
+    int *A;
+    int size;
+    int length;
+} * arr;
+
+void create(struct Array *Arr)
+{
+    int size;
+    printf("Enter size of Array\n");
+    scanf("%d", &size);
+    Arr->size = size;
+    Arr->A = (int *)malloc(Arr->size * sizeof(int));
+    Arr->length = 0;
+    printf("Enter Number of Elements\n");
+    scanf("%d", &Arr->length);
+    printf("Enter Elements in your Array\n");
+    for (int i = 0; i < Arr->length; i++)
+    {
+        scanf("%d", &Arr->A[i]);
+    }
+}
+
+void display(struct Array *Arr)
+{
+
+    for (int i = 0; i < Arr->length; i++)
+    {
+        printf("%d ", Arr->A[i]);
+    }
+    printf("\n");
+}
+
+void append(struct Array *Arr, int x)
+{
+    if (Arr->length < Arr->size)
+    {
+        Arr->A[Arr->length] = x;
+    }
+    Arr->length++;
+    display(&arr);
+}
+
+void insert(struct Array *Arr, int index, int x)
+{
+    int i;
+    if (index > 0 && index <= Arr->length)
+    {
+        for (int i = Arr->length; i > index; i--)
+        {
+            Arr->A[i] = Arr->A[i - 1];
+        }
+        Arr->A[index] = x;
+        Arr->length++;
+    }
+    display(&arr);
+}
+int main()
+{
+    int choice;
+    int append_num;
+    int insert_index, insert_num;
+    printf("Create Your Array ");
+    create(&arr);
+    while (1)
+    {
+
+        printf("Enter Your Choice - 1.)Display Array, 2.)Append Array, 3.)Insert at any Index\n");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+        case 1:
+            printf("Your Array is :-\n");
+            display(&arr);
+            break;
+        case 2:
+            printf("Enter Integer to Append\n");
+            scanf("%d", &append_num);
+            printf("Your Original Array\n");
+            display(&arr);
+            printf("Your Array after Append\n");
+            append(&arr, append_num);
+            break;
+        case 3:
+            printf("Enter Index and Number to insert\n");
+            scanf("%d %d", &insert_index, &insert_num);
+            printf("Original Array\n");
+            display(&arr);
+            printf("Array after insertion\n");
+            insert(&arr, insert_index, insert_num);
+            break;
+        default:
+            break;
+        }
+    }
+    return 0;
+}
